@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "NexHSE Africa"
+description = "A premium public website for NexHSE Africa, helping organisations protect people, reduce workplace risk, strengthen compliance and develop safer teams through HSE services and professional training."
+version = "1.0.0"
+id = "artifacts/nexhse-africa"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22046
+
+[services.development]
+run = "pnpm --filter @workspace/nexhse-africa run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/nexhse-africa", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/nexhse-africa/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22046"
+BASE_PATH = "/"
