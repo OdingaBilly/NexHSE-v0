@@ -12,6 +12,7 @@ import heightsImage from '@assets/image-33_1787989938474.jpg';
 import fieldImage from '@assets/image-15_1787989938475.jpg';
 import heightsStock from '@assets/img-05_1787989938475.webp';
 import harnessImage from '@assets/img-04_1787989938476.jpg';
+import nexhseLogo from '@assets/logo01_1787991144513.png';
 
 const queryClient = new QueryClient();
 const phone = '0705 065 852';
@@ -79,9 +80,8 @@ function Seo({ page = 'home', title, description }: { page?: string; title?: str
 }
 
 function Logo({ light = false }: { light?: boolean }) {
-  return <Link href="/" className={`flex items-center gap-2 focus-ring ${light ? 'text-white' : 'text-[hsl(var(--primary))]'}`} data-testid="link-logo">
-    <span className="grid h-9 w-9 place-items-center rounded-lg bg-[hsl(var(--accent))] text-white"><ShieldCheck size={21} strokeWidth={2.4} /></span>
-    <span className="leading-none"><span className="block text-lg font-bold tracking-[-.04em]">Nex<span className="text-[hsl(var(--accent))]">HSE</span></span><span className="mono-label mt-1 block text-[9px] opacity-65">AFRICA</span></span>
+  return <Link href="/" className={`flex items-center gap-2 focus-ring ${light ? 'text-white' : 'text-[hsl(var(--primary))]'}`} data-testid="link-logo" aria-label="NexHSE Africa home">
+    <img src={nexhseLogo} alt="NexHSE Africa — Safety & Growth" className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
   </Link>;
 }
 
@@ -108,7 +108,24 @@ function Navbar() {
 }
 
 function MobileActions() {
-  return <div className="fixed inset-x-3 bottom-3 z-30 grid grid-cols-3 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/.94)] p-1 shadow-[0_12px_40px_rgba(15,52,68,.18)] backdrop-blur md:hidden">
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    let settleTimer: number | undefined;
+    const handleScroll = () => {
+      setVisible(false);
+      if (settleTimer) window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(() => setVisible(true), 220);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (settleTimer) window.clearTimeout(settleTimer);
+    };
+  }, []);
+
+  return <div className={`fixed inset-x-3 bottom-3 z-30 grid grid-cols-3 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card)/.94)] p-1 shadow-[0_12px_40px_rgba(15,52,68,.18)] backdrop-blur transition-all duration-200 md:hidden ${visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-[calc(100%+1rem)] opacity-0'}`} aria-hidden={!visible}>
     <a href="https://wa.me/254705065852" target="_blank" rel="noreferrer" className="focus-ring flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl text-[10px] font-bold text-[hsl(var(--accent))]" data-testid="link-sticky-whatsapp"><span className="text-xs">WhatsApp</span></a>
     <a href={`tel:${phone.replaceAll(' ', '')}`} className="focus-ring flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl text-[10px] font-bold text-[hsl(var(--primary))]" data-testid="link-sticky-call"><Phone size={15} /><span>Call</span></a>
     <Link href="/request-a-quote" className="focus-ring flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl bg-[hsl(var(--primary))] text-[10px] font-bold text-white" data-testid="link-sticky-quote"><ArrowUpRight size={15} /><span>Quote</span></Link>
