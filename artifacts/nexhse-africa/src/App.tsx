@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { ArrowUpRight, Award, BriefcaseBusiness, Check, ChevronDown, ChevronRight, ClipboardCheck, Clock3, Flame, HardHat, HeartPulse, Leaf, Mail, MapPin, Menu, Phone, Search, ShieldCheck, Siren, Sparkles, Target, Users, X } from 'lucide-react';
+import { ArrowUpRight, Award, BriefcaseBusiness, Check, ChevronDown, ChevronLeft, ChevronRight, ClipboardCheck, Clock3, Flame, HardHat, HeartPulse, Leaf, Mail, MapPin, Menu, Phone, Search, ShieldCheck, Siren, Sparkles, Target, Users, X } from 'lucide-react';
 import { Link, Route, Switch, Router as WouterRouter, useLocation, useParams } from 'wouter';
 import heroImage from '@assets/image-36_1787989938472.jpg';
 import trainingImage from '@assets/image-23_1787989938474.jpg';
@@ -158,8 +158,92 @@ function Breadcrumbs({ items }: { items: string[][] }) {
   return <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2 text-[11px] font-semibold text-[hsl(var(--muted-foreground))]"><Link href="/" className="focus-ring hover:text-[hsl(var(--accent))]" data-testid="link-breadcrumb-home">Home</Link>{items.map(([label, href]) => <span key={label} className="flex items-center gap-2"><ChevronRight size={12} /><Link href={href} className="focus-ring hover:text-[hsl(var(--accent))]" data-testid={`link-breadcrumb-${label.toLowerCase().replaceAll(' ', '-')}`}>{label}</Link></span>)}</nav>;
 }
 
+function OrganicBackdrop({ dark = false }: { dark?: boolean }) {
+  return <div className={`organic-backdrop ${dark ? 'organic-backdrop--dark' : ''}`} aria-hidden="true"><span /><span /><span /></div>;
+}
+
+function OrganicImage({ src, alt, className = '', variant = 'quiet', loading = 'lazy' }: { src: string; alt: string; className?: string; variant?: 'quiet' | 'dark'; loading?: 'lazy' | 'eager' }) {
+  return <div className={`organic-image organic-image--${variant} ${className}`}><img src={src} alt={alt} loading={loading} /></div>;
+}
+
+const heroSlides = [
+  { image: heroImage, alt: 'Safety professionals in protective equipment during a practical construction-site training session', label: 'FIELD PRACTICE', caption: 'Learning where the work happens.' },
+  { image: trainingImage, alt: 'Workplace safety learners gathered for a classroom training session', label: 'BUILD CAPABILITY', caption: 'Knowledge that travels back to the workplace.' },
+  { image: heightsImage, alt: 'Safety professionals demonstrating ladder and harness procedures at height', label: 'CONTROL EXPOSURE', caption: 'Practical decisions for changing conditions.' },
+  { image: fireImage, alt: 'Two workplace trainees operating a fire extinguisher during a practical exercise', label: 'PREPARE TO RESPOND', caption: 'Calm response starts before the emergency.' },
+];
+
+function HeroSlideshow() {
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const touchStart = useRef<number | null>(null);
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncMotionPreference = () => setReducedMotion(media.matches);
+    syncMotionPreference();
+    media.addEventListener?.('change', syncMotionPreference);
+    return () => media.removeEventListener?.('change', syncMotionPreference);
+  }, []);
+
+  useEffect(() => {
+    if (paused || reducedMotion) return;
+    const timer = window.setInterval(() => setCurrent(index => (index + 1) % heroSlides.length), 6200);
+    return () => window.clearInterval(timer);
+  }, [paused, reducedMotion]);
+
+  const goTo = (index: number) => setCurrent((index + heroSlides.length) % heroSlides.length);
+  const goPrevious = () => goTo(current - 1);
+  const goNext = () => goTo(current + 1);
+
+  return <div
+    className="absolute inset-0 z-0 overflow-hidden"
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="NexHSE field practice"
+    data-testid="region-hero-slideshow"
+    onMouseEnter={() => setPaused(true)}
+    onMouseLeave={() => setPaused(false)}
+    onFocusCapture={() => setPaused(true)}
+    onBlurCapture={event => {
+      const next = event.relatedTarget as Node | null;
+      if (!next || !event.currentTarget.contains(next)) setPaused(false);
+    }}
+    onTouchStart={event => { touchStart.current = event.touches[0]?.clientX ?? null; }}
+    onTouchEnd={event => {
+      if (touchStart.current === null) return;
+      const distance = (event.changedTouches[0]?.clientX ?? touchStart.current) - touchStart.current;
+      if (Math.abs(distance) > 42) distance > 0 ? goPrevious() : goNext();
+      touchStart.current = null;
+    }}
+  >
+    {heroSlides.map((slide, index) => <img
+      key={slide.label}
+      src={slide.image}
+      alt={index === current ? slide.alt : ''}
+      aria-hidden={index !== current}
+      className={`hero-slide-image absolute inset-0 h-full w-full object-cover object-center ${index === current ? 'scale-100 opacity-55' : 'scale-105 opacity-0'}`}
+    />)}
+    <div className="organic-wash" />
+    <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4 lg:bottom-8 lg:left-auto lg:right-8 lg:w-[330px]">
+      <div aria-live="polite">
+        <p className="mono-label text-[9px] text-[hsl(var(--secondary))]">{heroSlides[current].label}</p>
+        <p className="mt-1 text-xs text-white/70" data-testid="text-hero-slide-caption">{heroSlides[current].caption}</p>
+      </div>
+      <div className="flex items-center gap-2">
+        <button type="button" onClick={goPrevious} className="focus-ring grid h-10 w-10 place-items-center rounded-full border border-white/30 bg-[hsl(var(--primary)/.32)] text-white backdrop-blur-sm transition-colors hover:bg-white/15" aria-label="Previous hero image" data-testid="button-hero-previous"><ChevronLeft size={17} /></button>
+        <button type="button" onClick={goNext} className="focus-ring grid h-10 w-10 place-items-center rounded-full border border-white/30 bg-[hsl(var(--primary)/.32)] text-white backdrop-blur-sm transition-colors hover:bg-white/15" aria-label="Next hero image" data-testid="button-hero-next"><ChevronRight size={17} /></button>
+      </div>
+    </div>
+    <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2 lg:bottom-9 lg:left-8 lg:translate-x-0" aria-label="Choose hero image">
+      {heroSlides.map((slide, index) => <button key={slide.label} type="button" onClick={() => goTo(index)} className="focus-ring flex h-7 w-7 items-center justify-center" aria-label={`Show hero image ${index + 1}`} aria-current={index === current ? 'true' : undefined} data-testid={`button-hero-indicator-${index}`}><span className={`block h-1.5 rounded-full transition-all ${index === current ? 'w-7 bg-[hsl(var(--accent))]' : 'w-2 bg-white/50'}`} /></button>)}
+    </div>
+  </div>;
+}
+
 function PageIntro({ eyebrow, title, text, image }: { eyebrow: string; title: string; text: string; image?: string }) {
-  return <section className="relative overflow-hidden bg-[hsl(var(--primary))] text-white"><div className="mx-auto grid max-w-7xl items-end gap-10 px-5 pb-16 pt-14 lg:grid-cols-[1.2fr_.8fr] lg:px-8 lg:pb-20 lg:pt-20"><div className="reveal"><p className="mono-label mb-5 text-[10px] text-[hsl(var(--secondary))]">{eyebrow}</p><h1 className="display max-w-3xl text-5xl leading-[1.02] tracking-[-.045em] sm:text-6xl">{title}</h1><p className="mt-6 max-w-xl text-base leading-7 text-white/70">{text}</p></div>{image && <div className="reveal reveal-delay-1 relative h-52 overflow-hidden rounded-[2rem] border border-white/20 lg:h-64"><img src={image} alt="" className="h-full w-full object-cover opacity-75" /><div className="absolute inset-0 bg-gradient-to-tr from-[hsl(var(--primary))] via-transparent to-transparent" /><span className="absolute bottom-5 left-5 mono-label text-[9px] text-white/75">FIELD / PRACTICE / PEOPLE</span></div>}</div><div className="pointer-events-none absolute -right-24 -top-40 h-96 w-96 rounded-full border border-[hsl(var(--accent)/.3)]" /></section>;
+  return <section className="relative overflow-hidden bg-[hsl(var(--primary))] text-white"><OrganicBackdrop dark /><div className="relative mx-auto grid max-w-7xl items-end gap-10 px-5 pb-16 pt-14 lg:grid-cols-[1.2fr_.8fr] lg:px-8 lg:pb-20 lg:pt-20"><div className="reveal"><p className="mono-label mb-5 text-[10px] text-[hsl(var(--secondary))]">{eyebrow}</p><h1 className="display max-w-3xl text-5xl leading-[1.02] tracking-[-.045em] sm:text-6xl">{title}</h1><p className="mt-6 max-w-xl text-base leading-7 text-white/70">{text}</p></div>{image && <OrganicImage src={image} alt="NexHSE professionals learning and applying workplace safety practice" variant="dark" className="reveal reveal-delay-1 relative h-52 border border-white/20 lg:h-64" />}<span className="absolute bottom-5 left-5 mono-label text-[9px] text-white/75 lg:bottom-7 lg:left-auto lg:right-8">FIELD / PRACTICE / PEOPLE</span></div><div className="pointer-events-none absolute -right-24 -top-40 h-96 w-96 rounded-full border border-[hsl(var(--accent)/.3)]" /></section>;
 }
 
 function SectionHeader({ eyebrow, title, text, action }: { eyebrow: string; title: string; text?: string; action?: ReactNode }) {
@@ -173,7 +257,7 @@ function TrustStrip() {
 function ServiceCard({ service, compact = false }: { service: Service; compact?: boolean }) {
   const Icon = service.icon;
   return <Link href={`/services/${service.slug}`} className={`group focus-ring relative block overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] transition-all duration-300 hover:-translate-y-1 hover:border-[hsl(var(--accent)/.65)] hover:shadow-[0_18px_45px_rgba(20,70,76,.12)] ${compact ? '' : 'min-h-[270px]'}`} data-testid={`card-service-${service.slug}`}>
-    <div className="absolute right-0 top-0 h-28 w-28 overflow-hidden rounded-bl-[3rem] opacity-0 transition-opacity duration-300 group-hover:opacity-100"><img src={service.image} alt="" className="h-full w-full object-cover grayscale" /></div>
+     <OrganicImage src={service.image} alt={`${service.title} workplace practice`} className="absolute right-0 top-0 h-28 w-28 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
     <div className="relative flex h-full flex-col p-6"><div className="flex items-start justify-between"><span className="grid h-10 w-10 place-items-center rounded-xl bg-[hsl(var(--secondary))] text-[hsl(var(--accent))]"><Icon size={19} /></span><span className="mono-label text-[10px] text-[hsl(var(--muted-foreground))]">{service.number}</span></div><div className="mt-auto pt-10"><p className="text-[10px] font-bold uppercase tracking-widest text-[hsl(var(--accent))]">{service.group} · {service.type.split(' / ')[0]}</p><h3 className="mt-2 text-xl font-bold tracking-tight text-[hsl(var(--primary))]">{service.title}</h3><p className="mt-2 max-w-xs text-sm leading-6 text-[hsl(var(--muted-foreground))]">{service.short}</p><span className="mt-5 inline-flex items-center gap-2 text-xs font-bold text-[hsl(var(--primary))]">Explore service <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></div></div>
   </Link>;
 }
@@ -189,7 +273,7 @@ function Home() {
     return services.filter(s => ['risk-assessment', 'safety-health-audits', 'osh-committee-training'].includes(s.slug));
   }, [solve]);
   return <Shell><Seo /><main>
-    <section className="relative isolate overflow-hidden bg-[hsl(var(--primary))] text-white"><img src={heroImage} alt="Safety professionals in protective equipment during a practical construction-site training session" className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-45" /><div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,hsl(209_71%_16%/.97)_0%,hsl(209_71%_20%/.86)_45%,hsl(209_71%_20%/.28)_100%)]" /><div className="mx-auto grid min-h-[650px] max-w-7xl items-end gap-12 px-5 pb-16 pt-20 lg:grid-cols-[1.1fr_.9fr] lg:px-8 lg:pb-24"><div className="reveal"><p className="mono-label mb-6 flex items-center gap-3 text-[10px] text-[hsl(var(--secondary))]"><span className="h-px w-8 bg-[hsl(var(--accent))]" />Workplace safety & professional development</p><h1 className="display max-w-3xl text-[3.6rem] leading-[.98] tracking-[-.055em] sm:text-7xl lg:text-[5.8rem]">Building safer,<br /><em className="font-medium text-[hsl(var(--secondary))]">smarter</em> & more<br />compliant workplaces.</h1><p className="mt-8 max-w-lg text-base leading-7 text-white/75">NexHSE partners with organisations to strengthen safety systems, reduce operational risk and develop the people who make workplaces safer.</p><div className="mt-9 flex flex-wrap gap-3"><Link href="/request-a-quote" className="focus-ring flex min-h-12 items-center gap-3 rounded-full bg-[hsl(var(--accent))] px-6 text-sm font-bold text-white transition-transform hover:-translate-y-0.5" data-testid="link-hero-quote">Request a quote <ArrowUpRight size={17} /></Link><Link href="/training" className="focus-ring flex min-h-12 items-center gap-3 rounded-full border border-white/35 px-6 text-sm font-bold text-white transition-colors hover:bg-white/10" data-testid="link-hero-training">Explore training <ChevronRight size={16} /></Link></div></div><div className="reveal reveal-delay-2 hidden justify-end lg:flex"><div className="w-72 rounded-2xl border border-white/20 bg-[hsl(var(--primary)/.5)] p-5 backdrop-blur-md"><p className="mono-label text-[9px] text-[hsl(var(--secondary))]">THE NEXHSE STANDARD</p><div className="mt-12 flex items-end justify-between border-b border-white/20 pb-4"><span className="display text-5xl">01</span><span className="text-right text-xs leading-5 text-white/65">Translate regulation<br />into everyday practice.</span></div><p className="pt-4 text-xs leading-5 text-white/65">Technical competence is only useful when it changes what happens on the ground.</p></div></div></div><div className="absolute bottom-7 right-8 hidden items-center gap-3 text-[10px] text-white/55 lg:flex"><span className="h-px w-12 bg-white/35" />Scroll to explore</div></section>
+     <section className="relative isolate overflow-hidden bg-[hsl(var(--primary))] text-white"><HeroSlideshow /><OrganicBackdrop dark /><div className="relative z-10 mx-auto grid min-h-[650px] max-w-7xl items-end gap-12 px-5 pb-16 pt-20 lg:grid-cols-[1.1fr_.9fr] lg:px-8 lg:pb-24"><div className="reveal"><p className="mono-label mb-6 flex items-center gap-3 text-[10px] text-[hsl(var(--secondary))]"><span className="h-px w-8 bg-[hsl(var(--accent))]" />Workplace safety & professional development</p><h1 className="display max-w-3xl text-[3.6rem] leading-[.98] tracking-[-.055em] sm:text-7xl lg:text-[5.8rem]">Building safer,<br /><em className="font-medium text-[hsl(var(--secondary))]">smarter</em> & more<br />compliant workplaces.</h1><p className="mt-8 max-w-lg text-base leading-7 text-white/75">NexHSE partners with organisations to strengthen safety systems, reduce operational risk and develop the people who make workplaces safer.</p><div className="mt-9 flex flex-wrap gap-3"><Link href="/request-a-quote" className="focus-ring flex min-h-12 items-center gap-3 rounded-full bg-[hsl(var(--accent))] px-6 text-sm font-bold text-white transition-transform hover:-translate-y-0.5" data-testid="link-hero-quote">Request a quote <ArrowUpRight size={17} /></Link><Link href="/training" className="focus-ring flex min-h-12 items-center gap-3 rounded-full border border-white/35 px-6 text-sm font-bold text-white transition-colors hover:bg-white/10" data-testid="link-hero-training">Explore training <ChevronRight size={16} /></Link></div></div><div className="reveal reveal-delay-2 hidden justify-end lg:flex"><div className="w-72 rounded-2xl border border-white/20 bg-[hsl(var(--primary)/.5)] p-5 backdrop-blur-md"><p className="mono-label text-[9px] text-[hsl(var(--secondary))]">THE NEXHSE STANDARD</p><div className="mt-12 flex items-end justify-between border-b border-white/20 pb-4"><span className="display text-5xl">01</span><span className="text-right text-xs leading-5 text-white/65">Translate regulation<br />into everyday practice.</span></div><p className="pt-4 text-xs leading-5 text-white/65">Technical competence is only useful when it changes what happens on the ground.</p></div></div></div><div className="absolute bottom-7 right-8 z-10 hidden items-center gap-3 text-[10px] text-white/55 lg:flex"><span className="h-px w-12 bg-white/35" />Scroll to explore</div></section>
     <TrustStrip />
     <section className="relative overflow-hidden px-5 py-24 lg:px-8 lg:py-32"><div className="grid-line pointer-events-none absolute inset-0 opacity-40" /><div className="relative mx-auto grid max-w-7xl gap-14 lg:grid-cols-[.8fr_1.2fr]"><div><p className="mono-label text-[10px] text-[hsl(var(--accent))]">The NexHSE idea</p><h2 className="display mt-5 max-w-lg text-5xl leading-[1.03] tracking-[-.05em] text-[hsl(var(--primary))] sm:text-6xl">Safety is not an expense.<br /><span className="text-[hsl(var(--accent))]">It is an investment.</span></h2></div><div className="lg:pt-10"><p className="max-w-xl text-lg leading-8 text-[hsl(var(--muted-foreground))]">Good safety work is not a binder on a shelf. It is the confidence to make better decisions, the systems that prevent loss and the capability to respond when conditions change.</p><div className="mt-10 grid gap-0 border-t border-[hsl(var(--border))] sm:grid-cols-2">{[['01', 'Protect people', 'Put human protection at the centre of every operational decision.'], ['02', 'Reduce risk', 'Make hazards visible, then make the next control practical.'], ['03', 'Strengthen compliance', 'Turn regulatory responsibility into everyday practice.'], ['04', 'Develop capability', 'Build the people and habits that keep safety moving.']].map(([n, t, d]) => <div key={n} className="border-b border-[hsl(var(--border))] py-6 pr-5"><span className="mono-label text-[10px] text-[hsl(var(--accent))]">{n}</span><h3 className="mt-3 font-bold text-[hsl(var(--primary))]">{t}</h3><p className="mt-2 text-sm leading-6 text-[hsl(var(--muted-foreground))]">{d}</p></div>)}</div></div></div></section>
     <section className="bg-[hsl(var(--secondary)/.55)] px-5 py-24 lg:px-8"><div className="mx-auto max-w-7xl"><SectionHeader eyebrow="What we do" title="A practical route from concern to control." text="Explore the right entry point for your organisation. Our offering brings assessment, protection, development and environmental responsibility together." action={<Link href="/services" className="focus-ring flex w-fit items-center gap-2 text-sm font-bold text-[hsl(var(--primary))]" data-testid="link-home-services">View all services <ArrowUpRight size={16} /></Link>} /><div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">{[['ASSESS', 'See what is happening', 'Audits and risk assessment that make priorities clearer.', 'safety-health-audits'], ['PROTECT', 'Prepare for what matters', 'Fire safety and workplace protection for real conditions.', 'fire-audits'], ['DEVELOP', 'Build capability', 'Practical training for the people who make safety possible.', 'osh-committee-training'], ['SUSTAIN', 'Think beyond today', 'Environmental support for responsible operations.', 'environmental-audits']].map(([eyebrow, title, text, slug], i) => <Link href={`/services/${slug}`} key={eyebrow} className="group focus-ring rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 transition-transform hover:-translate-y-1" data-testid={`card-home-group-${i}`}><span className="mono-label text-[10px] text-[hsl(var(--accent))]">{eyebrow}</span><h3 className="mt-14 text-xl font-bold text-[hsl(var(--primary))]">{title}</h3><p className="mt-2 text-sm leading-6 text-[hsl(var(--muted-foreground))]">{text}</p><span className="mt-8 grid h-9 w-9 place-items-center rounded-full bg-[hsl(var(--primary))] text-white transition-transform group-hover:translate-x-1"><ArrowUpRight size={15} /></span></Link>)}</div></div></section>
@@ -228,7 +312,7 @@ function Training() {
 }
 
 function CourseCard({ service }: { service: Service }) {
-  return <Link href={`/training/${service.slug}`} className="group focus-ring overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))]" data-testid={`card-course-${service.slug}`}><div className="relative h-40 overflow-hidden"><img src={service.image} alt={`${service.title} training`} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" /><div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary)/.7)] to-transparent" /><span className="absolute bottom-4 left-4 rounded-full bg-white/15 px-3 py-1 text-[9px] font-bold uppercase tracking-widest text-white backdrop-blur">Content catalogue</span></div><div className="p-5"><p className="mono-label text-[9px] text-[hsl(var(--accent))]">{service.group} / PROFESSIONAL DEVELOPMENT</p><h3 className="mt-3 text-lg font-bold text-[hsl(var(--primary))]">{service.title}</h3><p className="mt-2 text-sm leading-6 text-[hsl(var(--muted-foreground))]">{service.short}</p><div className="mt-5 flex items-center justify-between border-t border-[hsl(var(--border))] pt-4 text-xs font-bold text-[hsl(var(--primary))]"><span>Details & booking</span><ArrowUpRight size={15} /></div></div></Link>;
+  return <Link href={`/training/${service.slug}`} className="group focus-ring overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))]" data-testid={`card-course-${service.slug}`}><OrganicImage src={service.image} alt={`${service.title} training`} className="relative mx-2 mt-2 h-40" /><div className="relative -mt-40 h-40 overflow-hidden rounded-[2rem]"><div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary)/.7)] to-transparent" /><span className="absolute bottom-4 left-4 rounded-full bg-white/15 px-3 py-1 text-[9px] font-bold uppercase tracking-widest text-white backdrop-blur">Content catalogue</span></div><div className="p-5"><p className="mono-label text-[9px] text-[hsl(var(--accent))]">{service.group} / PROFESSIONAL DEVELOPMENT</p><h3 className="mt-3 text-lg font-bold text-[hsl(var(--primary))]">{service.title}</h3><p className="mt-2 text-sm leading-6 text-[hsl(var(--muted-foreground))]">{service.short}</p><div className="mt-5 flex items-center justify-between border-t border-[hsl(var(--border))] pt-4 text-xs font-bold text-[hsl(var(--primary))]"><span>Details & booking</span><ArrowUpRight size={15} /></div></div></Link>;
 }
 
 function CourseDetail() {

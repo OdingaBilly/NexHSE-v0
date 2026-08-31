@@ -43,10 +43,10 @@
   --border: 167 20% 83%;
   --input: 167 20% 78%;
   --ring: 166 62% 39%;
-  --card: 0 0% 100%;
+  --card: 156 38% 98%;
   --card-foreground: 213 45% 15%;
   --card-border: 167 20% 88%;
-  --popover: 0 0% 100%;
+  --popover: 156 38% 98%;
   --popover-foreground: 213 45% 15%;
   --primary: 209 71% 23%;
   --primary-foreground: 0 0% 100%;
@@ -75,6 +75,10 @@
   --elevate-2: rgba(20, 55, 70, .1);
   --opaque-button-border-intensity: -8;
   --button-outline: rgba(18, 55, 70, .14);
+  --organic-teal: 166 62% 39%;
+  --organic-seafoam: 162 51% 91%;
+  --organic-lime: 78 50% 66%;
+  --organic-coral: 7 61% 68%;
 }
 
 .dark {
@@ -99,6 +103,38 @@
   .focus-ring { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2; }
   .grid-line { background-image: linear-gradient(to right, rgba(32, 101, 104, .08) 1px, transparent 1px), linear-gradient(to bottom, rgba(32, 101, 104, .08) 1px, transparent 1px); background-size: 40px 40px; }
   .grain::after { content: ''; position: fixed; inset: 0; pointer-events: none; opacity: .035; z-index: 50; background-image: radial-gradient(rgba(18,55,70,.5) .6px, transparent .6px); background-size: 7px 7px; }
+  .organic-image { position: relative; isolation: isolate; overflow: visible; border-radius: 44% 56% 51% 49% / 43% 44% 56% 57%; }
+  .organic-image::before { content: ''; position: absolute; inset: 8px -10px -12px 10px; z-index: -1; border-radius: 55% 45% 43% 57% / 48% 52% 48% 52%; background: hsl(var(--organic-seafoam) / .8); transform: rotate(-4deg); }
+  .organic-image::after { content: ''; position: absolute; inset: -8px 10px 12px -8px; z-index: -2; border: 1px solid hsl(var(--accent) / .28); border-radius: 48% 52% 58% 42% / 54% 39% 61% 46%; transform: rotate(5deg); }
+  .organic-image img { position: relative; z-index: 1; display: block; height: 100%; width: 100%; border-radius: inherit; object-fit: cover; }
+  .organic-image--quiet::before { background: hsl(var(--organic-lime) / .34); }
+  .organic-image--quiet::after { border-color: hsl(var(--organic-teal) / .22); }
+  .organic-image--dark::before { background: hsl(var(--accent) / .3); }
+  .organic-image--dark::after { border-color: hsl(var(--secondary) / .42); }
+  .organic-backdrop { position: absolute; inset: 0; overflow: hidden; pointer-events: none; isolation: isolate; }
+  .organic-backdrop span { position: absolute; display: block; border-radius: 58% 42% 49% 51% / 41% 55% 45% 59%; filter: saturate(.86); }
+  .organic-backdrop span:nth-child(1) { right: -7%; top: -24%; width: 35rem; height: 24rem; background: hsl(var(--organic-teal) / .11); transform: rotate(18deg); }
+  .organic-backdrop span:nth-child(2) { left: -13%; bottom: -30%; width: 30rem; height: 22rem; background: hsl(var(--organic-lime) / .1); transform: rotate(-18deg); }
+  .organic-backdrop span:nth-child(3) { right: 20%; bottom: -16%; width: 22rem; height: 15rem; background: hsl(var(--organic-coral) / .08); transform: rotate(11deg); }
+  .organic-backdrop--dark span:nth-child(1) { background: hsl(var(--accent) / .18); }
+  .organic-backdrop--dark span:nth-child(2) { background: hsl(var(--secondary) / .1); }
+  .organic-backdrop--dark span:nth-child(3) { border: 1px solid hsl(var(--secondary) / .15); background: transparent; }
+  .hero-slide-image { transition: opacity 900ms cubic-bezier(.2,.8,.2,1), transform 1200ms cubic-bezier(.2,.8,.2,1); }
+  .organic-wash { position: absolute; inset: 0; background: linear-gradient(90deg, hsl(209 71% 16% / .97) 0%, hsl(209 71% 20% / .87) 43%, hsl(209 71% 20% / .32) 100%); }
+}
+
+main > section:not(:has(.organic-backdrop)) { position: relative; overflow: hidden; }
+main > section:not(:has(.organic-backdrop))::before,
+main > section:not(:has(.organic-backdrop))::after { content: ''; position: absolute; pointer-events: none; z-index: 0; border-radius: 57% 43% 52% 48% / 46% 55% 45% 54%; }
+main > section:not(:has(.organic-backdrop))::before { top: -9rem; right: -7rem; width: 25rem; height: 17rem; background: hsl(var(--organic-teal) / .055); transform: rotate(16deg); }
+main > section:not(:has(.organic-backdrop))::after { bottom: -8rem; left: -8rem; width: 24rem; height: 15rem; background: hsl(var(--organic-lime) / .055); transform: rotate(-13deg); }
+main a[data-testid^="card-course-"] > div:first-child { border-radius: 44% 56% 49% 51% / 34% 42% 58% 66%; margin: 8px 8px 0; }
+main a[data-testid^="card-course-"] > div:first-child img { border-radius: inherit; }
+main img[alt*="NexHSE training session"],
+main img[alt*="Safety team walking"],
+main img[alt*="practical workplace setting"] { border-radius: 46% 54% 51% 49% / 38% 45% 55% 62%; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide-image { transition: none; }
 }
 
 .reveal { animation: reveal .7s cubic-bezier(.2,.8,.2,1) both; }
