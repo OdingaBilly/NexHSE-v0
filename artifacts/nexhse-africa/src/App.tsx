@@ -133,8 +133,9 @@ function MobileActions() {
 }
 
 function Footer() {
-  return <footer className="bg-[hsl(var(--primary))] pb-28 pt-16 text-white md:pb-10">
-    <div className="mx-auto max-w-7xl px-5 lg:px-8">
+  return <footer className="site-footer relative isolate overflow-hidden bg-[hsl(var(--primary))] pb-28 pt-16 text-white md:pb-10">
+    <FooterSlideshow />
+    <div className="relative z-10 mx-auto max-w-7xl px-5 lg:px-8">
       <div className="grid gap-12 border-b border-white/15 pb-12 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
         <div><Logo light /><p className="mt-6 max-w-sm text-sm leading-7 text-white/65">Workplace safety and professional development for organisations building stronger, safer ways of working across Africa.</p><span className="mt-6 inline-flex items-center gap-2 rounded-full border border-[hsl(var(--accent)/.5)] px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-[hsl(var(--secondary))]"><span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--accent))]" /> Safety first</span></div>
         <FooterList title="Explore" links={[['About', '/about'], ['Services', '/services'], ['Training', '/training'], ['Projects', '/projects'], ['Knowledge', '/knowledge']]} />
@@ -144,6 +145,23 @@ function Footer() {
       <div className="flex flex-col gap-3 pt-6 text-[11px] text-white/45 sm:flex-row sm:items-center sm:justify-between"><span>© {new Date().getFullYear()} NexHSE Africa. Content subject to confirmation.</span><span>Privacy · Terms · Accessibility</span></div>
     </div>
   </footer>;
+}
+
+function FooterSlideshow() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setCurrent(index => (index + 1) % heroSlides.length);
+    }, 8500);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  return <div className="footer-slideshow" aria-hidden="true">
+    {heroSlides.map((slide, index) => <img key={slide.label} src={slide.image} alt="" className={`footer-slideshow-image ${index === current ? 'is-active' : ''}`} />)}
+    <div className="footer-slideshow-blur" />
+    <div className="footer-slideshow-wash" />
+  </div>;
 }
 
 function FooterList({ title, links }: { title: string; links: string[][] }) {
@@ -324,7 +342,7 @@ function Home() {
 }
 
 function QuoteCTA() {
-  return <section className="quote-cta-section px-5 py-12 lg:px-8 lg:py-16"><div className="quote-cta-panel relative isolate mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-white/20 bg-[hsl(var(--primary))] text-white sm:rounded-[3.5rem]"><OrganicBackdrop dark vivid /><div className="relative grid gap-10 px-6 py-12 sm:px-10 lg:grid-cols-[1fr_.72fr] lg:items-center lg:px-16 lg:py-16"><div className="relative z-10"><p className="mono-label text-[10px] text-[hsl(var(--secondary))]">Start a conversation</p><h2 className="display mt-4 max-w-2xl text-5xl leading-[1.02] tracking-[-.045em] sm:text-6xl">Let’s build a safer workplace.</h2><p className="mt-5 max-w-xl text-sm leading-7 text-white/70">Whether you are strengthening an existing safety programme or building one from the ground up, NexHSE is ready to work alongside your team.</p><div className="mt-7 flex flex-wrap items-center gap-5"><Link href="/request-a-quote" className="focus-ring flex min-h-12 items-center gap-2 rounded-full bg-[hsl(var(--accent))] px-5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5" data-testid="link-cta-quote">Request a quote <ArrowUpRight size={16} /></Link><Link href="/contact" className="focus-ring inline-flex items-center gap-2 text-sm font-bold text-white/85 hover:text-white" data-testid="link-cta-consultation">Book a consultation <ChevronRight size={16} /></Link></div></div><div className="quote-cta-visual relative z-10 h-52 w-full overflow-hidden sm:h-64 lg:h-72"><img src={trainingImage} alt="NexHSE professionals learning together in a workplace training session" loading="lazy" className="h-full w-full object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary)/.6)] via-transparent to-transparent" /><span className="absolute bottom-4 left-5 mono-label text-[9px] text-white/75">FIELD-LED / PRACTICAL / PEOPLE</span></div></div></div></section>;
+  return <section className="quote-cta-section px-5 py-12 lg:px-8 lg:py-16"><div className="quote-cta-panel relative isolate mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] border border-white/20 bg-[hsl(var(--primary))] text-white sm:rounded-[3.5rem]"><OrganicBackdrop dark vivid /><div className="relative grid gap-10 px-6 py-12 sm:px-10 lg:grid-cols-[1fr_.72fr] lg:items-center lg:px-16 lg:py-16"><div className="relative z-10"><p className="mono-label text-[10px] text-[hsl(var(--secondary))]">Start a conversation</p><h2 className="display mt-4 max-w-2xl text-5xl leading-[1.02] tracking-[-.045em] sm:text-6xl">Let’s build a safer workplace.</h2><p className="mt-5 max-w-xl text-sm leading-7 text-white/70">Whether you are strengthening an existing safety programme or building one from the ground up, NexHSE is ready to work alongside your team.</p><div className="mt-7 flex flex-wrap items-center gap-5"><Link href="/request-a-quote" className="focus-ring flex min-h-12 items-center gap-2 rounded-full bg-[hsl(var(--accent))] px-5 text-sm font-bold text-white transition-transform hover:-translate-y-0.5" data-testid="link-cta-quote">Request a quote <ArrowUpRight size={16} /></Link><Link href="/contact" className="focus-ring inline-flex items-center gap-2 text-sm font-bold text-white/85 hover:text-white" data-testid="link-cta-consultation">Book a consultation <ChevronRight size={16} /></Link></div></div><div className="quote-cta-visual relative z-10 h-52 w-full sm:h-64 lg:h-72"><img src={trainingImage} alt="NexHSE professionals learning together in a workplace training session" loading="lazy" className="h-full w-full object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--primary)/.6)] via-transparent to-transparent" /><span className="absolute bottom-4 left-5 mono-label text-[9px] text-white/75">FIELD-LED / PRACTICAL / PEOPLE</span></div></div></div></section>;
 }
 
 function About() {
