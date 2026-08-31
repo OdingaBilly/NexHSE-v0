@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { ArrowUpRight, Award, BriefcaseBusiness, Check, ChevronDown, ChevronLeft, ChevronRight, ClipboardCheck, Clock3, Flame, HardHat, HeartPulse, Leaf, Mail, MapPin, Menu, Phone, Search, ShieldCheck, Siren, Sparkles, Target, Users, X } from 'lucide-react';
+import { ArrowUpRight, Award, BriefcaseBusiness, Check, ChevronDown, ChevronLeft, ChevronRight, ClipboardCheck, Clock3, Flame, HardHat, HeartPulse, Leaf, Mail, MapPin, Phone, Search, ShieldCheck, Siren, Sparkles, Target, Users } from 'lucide-react';
 import { Link, Route, Switch, Router as WouterRouter, useLocation, useParams } from 'wouter';
 import heroImage from '@assets/image-36_1787989938472.jpg';
 import trainingImage from '@assets/image-23_1787989938474.jpg';
@@ -98,12 +98,17 @@ function Navbar() {
         <a href="https://wa.me/254705065852" target="_blank" rel="noreferrer" className="focus-ring flex min-h-11 items-center gap-2 rounded-full border border-[hsl(var(--border))] px-4 text-[12px] font-bold text-[hsl(var(--primary))] transition-colors hover:border-[hsl(var(--accent))] hover:text-[hsl(var(--accent))]" data-testid="link-whatsapp"><span className="h-2 w-2 rounded-full bg-[hsl(var(--accent))]" /> WhatsApp</a>
         <Link href="/request-a-quote" className="focus-ring flex min-h-11 items-center gap-2 rounded-full bg-[hsl(var(--primary))] px-5 text-[12px] font-bold tracking-wide text-white transition-transform hover:-translate-y-0.5" data-testid="link-header-quote">Request a quote <ArrowUpRight size={15} /></Link>
       </div>
-      <button onClick={() => setOpen(!open)} className="focus-ring grid h-11 w-11 place-items-center rounded-full border border-[hsl(var(--border))] lg:hidden" aria-label={open ? 'Close navigation' : 'Open navigation'} data-testid="button-mobile-menu">{open ? <X size={20} /> : <Menu size={20} />}</button>
+      <button onClick={() => setOpen(!open)} className="focus-ring grid h-11 w-11 place-items-center rounded-full border border-[hsl(var(--border))] transition-[transform,background-color,border-color] duration-700 ease-[cubic-bezier(.16,1,.3,1)] hover:border-[hsl(var(--accent)/.55)] hover:bg-[hsl(var(--secondary)/.55)] lg:hidden" aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} data-testid="button-mobile-menu">
+        <span className={`hamburger-mark ${open ? 'is-open' : ''}`} aria-hidden="true"><span /><span /><span /></span>
+      </button>
     </div>
-    {open && <nav className="border-t border-[hsl(var(--border))] bg-[hsl(var(--background))] px-5 py-4 lg:hidden" aria-label="Mobile navigation">
-      {links.map(([label, href]) => <Link onClick={() => setOpen(false)} key={href} href={href} className="focus-ring flex min-h-12 items-center justify-between border-b border-[hsl(var(--border)/.65)] text-sm font-semibold" data-testid={`link-mobile-${label.toLowerCase()}`}>{label}<ChevronRight size={16} className="text-[hsl(var(--accent))]" /></Link>)}
-      <Link onClick={() => setOpen(false)} href="/request-a-quote" className="mt-4 flex min-h-12 items-center justify-center rounded-full bg-[hsl(var(--primary))] font-bold text-white" data-testid="link-mobile-quote">Request a quote <ArrowUpRight size={16} className="ml-2" /></Link>
-    </nav>}
+    <nav className={`mobile-nav lg:hidden ${open ? 'is-open' : ''}`} aria-label="Mobile navigation" aria-hidden={!open}>
+      <MobileNavSlideshow />
+      <div className="mobile-nav-content relative z-10 px-5 py-4">
+        {links.map(([label, href]) => <Link onClick={() => setOpen(false)} key={href} href={href} className="mobile-nav-link focus-ring flex min-h-12 items-center justify-between border-b border-[hsl(var(--border)/.65)] text-sm font-semibold" data-testid={`link-mobile-${label.toLowerCase()}`}>{label}<ChevronRight size={16} className="text-[hsl(var(--accent))]" /></Link>)}
+        <Link onClick={() => setOpen(false)} href="/request-a-quote" className="mobile-nav-quote focus-ring mt-4 flex min-h-12 items-center justify-center rounded-full bg-[hsl(var(--primary))] font-bold text-white" data-testid="link-mobile-quote">Request a quote <ArrowUpRight size={16} className="ml-2" /></Link>
+      </div>
+    </nav>
   </header>;
 }
 
@@ -161,6 +166,22 @@ function FooterSlideshow() {
     {heroSlides.map((slide, index) => <img key={slide.label} src={slide.image} alt="" className={`footer-slideshow-image ${index === current ? 'is-active' : ''}`} />)}
     <div className="footer-slideshow-blur" />
     <div className="footer-slideshow-wash" />
+  </div>;
+}
+
+function MobileNavSlideshow() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setCurrent(index => (index + 1) % heroSlides.length);
+    }, 5200);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  return <div className="mobile-nav-slideshow" aria-hidden="true">
+    {heroSlides.map((slide, index) => <img key={slide.label} src={slide.image} alt="" className={`mobile-nav-slideshow-image ${index === current ? 'is-active' : ''}`} />)}
+    <div className="mobile-nav-slideshow-wash" />
   </div>;
 }
 
@@ -275,7 +296,7 @@ function TrustStrip() {
 function ServiceCard({ service, compact = false }: { service: Service; compact?: boolean }) {
   const Icon = service.icon;
   return <Link href={`/services/${service.slug}`} className={`group focus-ring relative block overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] transition-all duration-300 hover:-translate-y-1 hover:border-[hsl(var(--accent)/.65)] hover:shadow-[0_18px_45px_rgba(20,70,76,.12)] ${compact ? '' : 'min-h-[270px]'}`} data-testid={`card-service-${service.slug}`}>
-     <OrganicImage src={service.image} alt={`${service.title} workplace practice`} className="absolute right-0 top-0 h-28 w-28 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+     <OrganicImage src={service.image} alt="" className="service-card-image pointer-events-none absolute right-0 top-0 h-40 w-40 opacity-[.16] transition-all duration-700 group-hover:scale-110 group-hover:opacity-[.34]" />
     <div className="relative flex h-full flex-col p-6"><div className="flex items-start justify-between"><span className="grid h-10 w-10 place-items-center rounded-xl bg-[hsl(var(--secondary))] text-[hsl(var(--accent))]"><Icon size={19} /></span><span className="mono-label text-[10px] text-[hsl(var(--muted-foreground))]">{service.number}</span></div><div className="mt-auto pt-10"><p className="text-[10px] font-bold uppercase tracking-widest text-[hsl(var(--accent))]">{service.group} · {service.type.split(' / ')[0]}</p><h3 className="mt-2 text-xl font-bold tracking-tight text-[hsl(var(--primary))]">{service.title}</h3><p className="mt-2 max-w-xs text-sm leading-6 text-[hsl(var(--muted-foreground))]">{service.short}</p><span className="mt-5 inline-flex items-center gap-2 text-xs font-bold text-[hsl(var(--primary))]">Explore service <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span></div></div>
   </Link>;
 }
