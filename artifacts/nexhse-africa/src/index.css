@@ -119,6 +119,15 @@
   .organic-backdrop--dark span:nth-child(1) { background: hsl(var(--accent) / .18); }
   .organic-backdrop--dark span:nth-child(2) { background: hsl(var(--secondary) / .1); }
   .organic-backdrop--dark span:nth-child(3) { border: 1px solid hsl(var(--secondary) / .15); background: transparent; }
+  .organic-backdrop span:nth-child(4) { left: 28%; top: 44%; width: 18rem; height: 12rem; background: hsl(var(--organic-lime) / .06); transform: rotate(-24deg); }
+  .organic-backdrop span:nth-child(5) { right: 4%; bottom: 8%; width: 20rem; height: 14rem; background: hsl(var(--organic-teal) / .05); transform: rotate(30deg); }
+  .organic-backdrop--vivid span:nth-child(1) { background: hsl(var(--organic-teal) / .24); }
+  .organic-backdrop--vivid span:nth-child(2) { background: hsl(var(--organic-lime) / .18); }
+  .organic-backdrop--vivid span:nth-child(3) { background: hsl(var(--organic-seafoam) / .13); border: 0; }
+  .organic-backdrop--vivid span:nth-child(4) { background: hsl(var(--organic-lime) / .13); }
+  .organic-backdrop--vivid span:nth-child(5) { background: hsl(var(--organic-teal) / .12); }
+  .quote-cta-visual { border-radius: 52% 48% 42% 58% / 39% 35% 65% 61%; transform: rotate(4deg); }
+  .quote-cta-visual img { transform: rotate(-4deg) scale(1.1); }
   .hero-slide-image { transition: opacity 900ms cubic-bezier(.2,.8,.2,1), transform 1200ms cubic-bezier(.2,.8,.2,1); }
   .organic-wash { position: absolute; inset: 0; background: linear-gradient(90deg, hsl(209 71% 16% / .97) 0%, hsl(209 71% 20% / .87) 43%, hsl(209 71% 20% / .32) 100%); }
 }
@@ -133,6 +142,13 @@ main a[data-testid^="card-course-"] > div:first-child img { border-radius: inher
 main img[alt*="NexHSE training session"],
 main img[alt*="Safety team walking"],
 main img[alt*="practical workplace setting"] { border-radius: 46% 54% 51% 49% / 38% 45% 55% 62%; }
+.home-page > section:nth-of-type(5),
+.home-page > section:nth-of-type(8) { display: none; }
+.home-page > section:nth-of-type(3),
+.home-page > section:nth-of-type(4),
+.home-page > section:nth-of-type(6),
+.home-page > section:nth-of-type(7) { padding-top: 4rem; padding-bottom: 4rem; }
+.home-page .quote-cta-section { padding-top: 3rem; padding-bottom: 3.5rem; }
 @media (prefers-reduced-motion: reduce) {
   .hero-slide-image { transition: none; }
 }

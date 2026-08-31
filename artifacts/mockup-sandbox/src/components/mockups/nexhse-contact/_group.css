@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --background: 158 33% 97%;
+  --primary: 209 71% 23%;
+  --secondary: 162 51% 91%;
+  --accent: 166 62% 39%;
+  --muted-foreground: 210 17% 40%;
+  --border: 167 20% 83%;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'DM Sans', sans-serif; background: hsl(var(--secondary)); }
+.display { font-family: 'Playfair Display', Georgia, serif; }
+.mono-label { font-family: 'Space Mono', monospace; letter-spacing: .12em; }
+.nexhse-contact { min-height: 100vh; padding: 0; background: hsl(var(--secondary)); }
+.nexhse-contact__section { padding: 80px 32px; }
+.nexhse-contact__inner { width: min(1180px, 100%); margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
+.nexhse-contact__eyebrow { color: hsl(var(--accent)); font-size: 10px; }
+.nexhse-contact__title { max-width: 700px; margin: 18px 0 0; color: hsl(var(--primary)); font-size: clamp(44px, 7vw, 78px); line-height: 1.02; letter-spacing: -.045em; }
+.nexhse-contact__text { max-width: 540px; margin: 20px 0 0; color: hsl(var(--muted-foreground)); font-size: 14px; line-height: 1.8; }
+.nexhse-contact__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.nexhse-contact__button { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 999px; background: hsl(var(--primary)); color: white; font-size: 13px; font-weight: 700; text-decoration: none; }
+.nexhse-contact__button--outline { background: transparent; border: 1px solid hsl(var(--primary) / .25); color: hsl(var(--primary)); }
+@media (min-width: 768px) {
+  .nexhse-contact__inner { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+  .nexhse-contact__actions { flex-shrink: 0; }
+}
+@media (max-width: 600px) { .nexhse-contact__section { padding: 56px 20px; } }
