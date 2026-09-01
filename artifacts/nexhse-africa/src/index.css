@@ -178,7 +178,7 @@
   .mobile-nav.is-open .mobile-nav-link:nth-child(5) { transition-delay: 380ms; }
   .mobile-nav.is-open .mobile-nav-link:nth-child(6) { transition-delay: 440ms; }
   .mobile-nav-quote { opacity: .05; transform: translateY(-8px); transition: opacity 600ms ease 500ms, transform 700ms cubic-bezier(.16,1,.3,1) 500ms, background-color 350ms ease; }
-  .service-card-image { z-index: 0; }
+  .service-card-image { z-index: 0; opacity: .24; }
   .footer-slideshow { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
   .footer-slideshow-image { position: absolute; inset: -4%; height: 108%; width: 108%; border-radius: 46% 54% 48% 52% / 42% 38% 62% 58%; object-fit: cover; opacity: 0; filter: blur(10px) saturate(.9) brightness(.78); transform: scale(1.06); transition: opacity 1.8s ease-in-out; }
   .footer-slideshow-image.is-active { opacity: .72; animation: footer-slideshow-pan 12s ease-in-out both alternate; }
@@ -214,8 +214,6 @@ main > section:not(:has(.organic-backdrop))::before,
 main > section:not(:has(.organic-backdrop))::after { content: ''; position: absolute; pointer-events: none; z-index: 0; border-radius: 57% 43% 52% 48% / 46% 55% 45% 54%; }
 main > section:not(:has(.organic-backdrop))::before { top: -9rem; right: -7rem; width: 25rem; height: 17rem; background: hsl(var(--organic-teal) / .055); animation: ambient-shape-one 23s ease-in-out infinite alternate; }
 main > section:not(:has(.organic-backdrop))::after { bottom: -8rem; left: -8rem; width: 24rem; height: 15rem; background: hsl(var(--organic-lime) / .055); animation: ambient-shape-two 27s ease-in-out infinite alternate; }
-main > section:not(:has(.organic-backdrop)) > * { position: relative; z-index: 1; }
-main > section > .content-required-section { position: relative; z-index: 1; }
 .content-required-section { background: hsl(var(--secondary) / .24); }
 .content-required-outline { position: absolute; pointer-events: none; border: 1px solid hsl(var(--accent) / .2); border-radius: 54% 46% 58% 42% / 45% 58% 42% 55%; }
 .content-required-outline--one { right: -5rem; top: 12%; width: 26rem; height: 18rem; animation: content-outline-one 20s ease-in-out infinite alternate; }
@@ -227,8 +225,6 @@ main a[data-testid^="card-course-"] > div:first-child img { border-radius: inher
 main img[alt*="NexHSE training session"],
 main img[alt*="Safety team walking"],
 main img[alt*="practical workplace setting"] { border-radius: 46% 54% 51% 49% / 38% 45% 55% 62%; }
-.home-page > section:nth-of-type(5),
-.home-page > section:nth-of-type(8) { display: none; }
 .home-page > section:nth-of-type(3),
 .home-page > section:nth-of-type(4),
 .home-page > section:nth-of-type(6),

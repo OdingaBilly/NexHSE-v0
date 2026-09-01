@@ -1,0 +1,1 @@
+- [Organic motion and content visibility](organic-motion-and-content-visibility.md) — keep decorative motion scoped to pseudo-elements and avoid section-count selectors for visibility.
