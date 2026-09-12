@@ -99,6 +99,7 @@
 
 @layer utilities {
   .display { font-family: var(--app-font-serif); }
+  .home-page > section:first-of-type h1.display { font-family: var(--app-font-sans); }
   .mono-label { font-family: var(--app-font-mono); letter-spacing: .12em; }
   .focus-ring { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2; }
   .grid-line { background-image: linear-gradient(to right, rgba(32, 101, 104, .08) 1px, transparent 1px), linear-gradient(to bottom, rgba(32, 101, 104, .08) 1px, transparent 1px); background-size: 40px 40px; }
@@ -220,6 +221,30 @@ main > section:not(:has(.organic-backdrop))::after { bottom: -8rem; left: -8rem;
 .content-required-outline--two { left: -6rem; bottom: -5rem; width: 23rem; height: 14rem; border-color: hsl(var(--organic-lime) / .25); animation: content-outline-two 24s ease-in-out infinite alternate; }
 .content-required-card { min-height: 220px; }
 .content-required-image { margin-right: 1rem; }
+@media (min-width: 1024px) {
+  .home-page > section:first-child > [data-testid="region-hero-slideshow"] {
+    left: 50%;
+    right: 0;
+    width: 50%;
+    background: hsl(var(--primary));
+    border-left: 1px solid hsl(var(--secondary) / .18);
+  }
+  .home-page > section:first-child > [data-testid="region-hero-slideshow"] .organic-wash,
+  .home-page > section:first-child > .organic-backdrop {
+    display: none;
+  }
+  .home-page > section:first-child > div.relative.z-10 {
+    width: 50%;
+    max-width: none;
+    margin: 0;
+    grid-template-columns: 1fr;
+    padding-left: clamp(1.25rem, 5vw, 5rem);
+    padding-right: clamp(1.25rem, 5vw, 5rem);
+  }
+  .home-page > section:first-child > div.relative.z-10 > .reveal-delay-2 {
+    display: none;
+  }
+}
 main a[data-testid^="card-course-"] > div:first-child { border-radius: 44% 56% 49% 51% / 34% 42% 58% 66%; margin: 8px 8px 0; }
 main a[data-testid^="card-course-"] > div:first-child img { border-radius: inherit; }
 main img[alt*="NexHSE training session"],
@@ -317,6 +342,53 @@ main img[alt*="practical workplace setting"] { border-radius: 46% 54% 51% 49% / 
   100% { transform: translate3d(-22px, 12px, 0) rotate(2deg) scale(1.04); }
 }
 @media (max-width: 799px) {
+  .home-page > section:first-child > div.relative.z-10 {
+    min-height: 600px;
+    align-items: end;
+    padding-top: 4rem;
+    padding-bottom: 6.5rem;
+  }
+  .home-page > section:first-child > div.relative.z-10 > .reveal {
+    width: 100%;
+  }
+  .home-page > section:first-child h1.display {
+    max-width: 22rem;
+    font-size: 3rem;
+    line-height: 1;
+    letter-spacing: -.045em;
+  }
+  .home-page > section:first-child .mt-8.max-w-lg {
+    margin-top: 1.5rem;
+    max-width: 23rem;
+    font-size: .95rem;
+    line-height: 1.65;
+  }
+  .home-page > section:first-child .mt-9.flex {
+    margin-top: 1.5rem;
+    gap: .625rem;
+  }
+  .home-page > section:first-child .mt-9.flex > a {
+    min-height: 2.875rem;
+    padding-left: 1.125rem;
+    padding-right: 1.125rem;
+  }
+  .home-page > section:first-child > [data-testid="region-hero-slideshow"] > div.absolute.bottom-5 {
+    bottom: 1rem;
+  }
+  .home-page > section:first-child > [data-testid="region-hero-slideshow"] > div.absolute.bottom-5 > div:first-child {
+    max-width: 11rem;
+  }
+  .home-page > section:first-child > [data-testid="region-hero-slideshow"] > div.absolute.bottom-5 > div:last-child button {
+    height: 2.75rem;
+    width: 2.75rem;
+  }
+  .home-page > section:first-child > [data-testid="region-hero-slideshow"] > div.absolute.bottom-5.left-1\/2 {
+    bottom: .75rem;
+  }
+  .home-page > section:nth-of-type(2) > div > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
   .home-projects-section { padding-top: 3.5rem; padding-bottom: 4rem; }
   .home-projects-wash { inset: 0 -34%; opacity: .64; }
   .home-projects-shape--teal { left: -18%; top: -9%; width: 22rem; height: 16rem; }
@@ -332,6 +404,27 @@ main img[alt*="practical workplace setting"] { border-radius: 46% 54% 51% 49% / 
   .home-projects-side::after { right: -25%; bottom: -21%; width: 78%; height: 45%; }
   .quote-cta-visual::before { inset: 8px -10px -11px 8px; }
   .quote-cta-visual::after { inset: -8px 8px 11px -8px; }
+}
+@media (max-width: 479px) {
+  .home-page > section:first-child > div.relative.z-10 {
+    min-height: 620px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .home-page > section:first-child h1.display {
+    font-size: 2.75rem;
+  }
+  .home-page > section:first-child .mt-9.flex {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .home-page > section:first-child .mt-9.flex > a {
+    justify-content: center;
+    width: 100%;
+  }
+  .home-page > section:nth-of-type(2) > div > div {
+    grid-template-columns: 1fr;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .hamburger-mark span,
