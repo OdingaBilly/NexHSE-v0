@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm --filter @workspace/nexhse-africa run build && mkdir -p public && cp -r artifacts/nexhse-africa/dist/* public/",
+  "buildCommand": "bash -c 'pnpm --filter @workspace/nexhse-africa run build && mkdir -p public && cp -r artifacts/nexhse-africa/dist/* public/'",
   "outputDirectory": "public",
   "framework": "vite",
   "env": {
