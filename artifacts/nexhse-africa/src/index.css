@@ -219,6 +219,10 @@
   .head-office-map { overflow: hidden; border: 1px solid hsl(var(--border)); border-radius: 1.25rem; background: hsl(var(--secondary)); box-shadow: 0 12px 30px hsl(var(--primary) / .08); }
   .head-office-map iframe { display: block; height: clamp(18rem, 42vw, 28rem); width: 100%; border: 0; }
   .footer-map { border-top: 1px solid hsl(0 0% 100% / .14); padding-top: 1.25rem; }
+  .footer-socials { display: flex; align-items: center; gap: .55rem; margin-top: 1.25rem; }
+  .footer-social-link { display: grid; height: 2.35rem; width: 2.35rem; place-items: center; border: 1px solid hsl(0 0% 100% / .2); border-radius: 999px; color: hsl(var(--secondary)); background: hsl(0 0% 100% / .06); transition: color .25s ease, background-color .25s ease, border-color .25s ease, transform .25s ease; }
+  .footer-social-link:hover { border-color: hsl(var(--accent) / .72); background: hsl(var(--accent) / .2); color: white; transform: translateY(-2px); }
+  .footer-social-link svg { height: 1rem; width: 1rem; }
   .footer-map .head-office-map { max-width: 24rem; border-color: hsl(0 0% 100% / .18); border-radius: .9rem; background: hsl(0 0% 100% / .08); box-shadow: none; }
   .footer-map .head-office-map iframe { height: 9rem; }
   .head-office-map-wrap + section > div > div > div.mt-10.h-52 { display: none; }

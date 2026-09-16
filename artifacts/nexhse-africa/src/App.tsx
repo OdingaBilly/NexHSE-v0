@@ -4,6 +4,7 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { ArrowUpRight, Award, BriefcaseBusiness, Check, ChevronDown, ChevronLeft, ChevronRight, ClipboardCheck, Clock3, Download, FileText, Flame, HardHat, HeartPulse, Leaf, Mail, MapPin, Phone, Search, ShieldCheck, Siren, Sparkles, Target, Users } from 'lucide-react';
+import { FaFacebookF, FaGoogle, FaLinkedinIn, FaTiktok } from 'react-icons/fa6';
 import { Link, Route, Switch, Router as WouterRouter, useLocation, useParams } from 'wouter';
 const heroImage = '/assets/image-36_1787989938472-CuZj7f29.jpg';
 const trainingImage = '/assets/OSH-Commitee.jpeg';
@@ -23,6 +24,12 @@ const nexhseLogo = '/assets/logo01_1787991144513-BzpG7v81.png';
 const queryClient = new QueryClient();
 const phone = '0705 065 852';
 const email = 'info@nexhse.com';
+const socialLinks = [
+  { label: 'Find NexHSE Africa on Facebook', href: 'https://www.facebook.com/search/pages/?q=NexHSE%20Africa', icon: FaFacebookF, testId: 'link-footer-facebook' },
+  { label: 'Find NexHSE Africa on TikTok', href: 'https://www.tiktok.com/search?q=NexHSE%20Africa', icon: FaTiktok, testId: 'link-footer-tiktok' },
+  { label: 'Find NexHSE Africa on LinkedIn', href: 'https://www.linkedin.com/search/results/companies/?keywords=NexHSE%20Africa', icon: FaLinkedinIn, testId: 'link-footer-linkedin' },
+  { label: 'Open NexHSE Africa on Google Business', href: 'https://www.google.com/maps/search/?api=1&query=NexHSE%20Africa%2C%20Nairobi', icon: FaGoogle, testId: 'link-footer-google-business' },
+];
 
 type IconType = typeof ShieldCheck;
 type Service = { slug: string; number: string; title: string; short: string; outcome: string; type: 'Training & Capacity Building' | 'Assessments, Audits & Policy' | 'Specialised Services' | 'Equipment Supply' | 'Environmental Management'; icon: IconType; image: string; group: string; };
@@ -207,7 +214,7 @@ function Footer() {
         <div><Logo light /><p className="mt-6 max-w-sm text-sm leading-7 text-white/65">Workplace safety and professional development for organisations building stronger, safer ways of working across Africa.</p><span className="mt-6 inline-flex items-center gap-2 rounded-full border border-[hsl(var(--accent)/.5)] px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-[hsl(var(--secondary))]"><span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--accent))]" /> Safety first</span></div>
         <FooterList title="Explore" links={[['About', '/about'], ['Services', '/services'], ['Training', '/training'], ['Projects', '/projects'], ['Knowledge', '/knowledge'], ['HSE FAQs', '/faqs'], ['Blog', '/blog']]} />
         <FooterList title="Start a conversation" links={[['Contact', '/contact'], ['Request a quote', '/request-a-quote'], ['Accreditations', '/accreditations'], ['Testimonials', '/testimonials']]} />
-        <div><p className="mono-label text-[10px] text-[hsl(var(--secondary))]">CONTACT</p><address className="mt-5 space-y-4 text-sm not-italic text-white/75"><a href="https://maps.google.com/?q=Rock+Centre+Outer+Ring+Road" className="focus-ring flex items-start gap-3" data-testid="link-footer-address"><MapPin size={17} className="mt-0.5 shrink-0 text-[hsl(var(--accent))]" />Rock Centre, Outer Ring Road</a><a href={`tel:${phone.replaceAll(' ', '')}`} className="focus-ring flex items-center gap-3" data-testid="link-footer-phone"><Phone size={16} className="text-[hsl(var(--accent))]" />{phone}</a><a href={`mailto:${email}`} className="focus-ring flex items-center gap-3" data-testid="link-footer-email"><Mail size={16} className="text-[hsl(var(--accent))]" />{email}</a></address></div>
+        <div><p className="mono-label text-[10px] text-[hsl(var(--secondary))]">CONTACT</p><address className="mt-5 space-y-4 text-sm not-italic text-white/75"><a href="https://maps.google.com/?q=Rock+Centre+Outer+Ring+Road" className="focus-ring flex items-start gap-3" data-testid="link-footer-address"><MapPin size={17} className="mt-0.5 shrink-0 text-[hsl(var(--accent))]" />Rock Centre, Outer Ring Road</a><a href={`tel:${phone.replaceAll(' ', '')}`} className="focus-ring flex items-center gap-3" data-testid="link-footer-phone"><Phone size={16} className="text-[hsl(var(--accent))]" />{phone}</a><a href={`mailto:${email}`} className="focus-ring flex items-center gap-3" data-testid="link-footer-email"><Mail size={16} className="text-[hsl(var(--accent))]" />{email}</a></address><div className="footer-socials" aria-label="NexHSE Africa social profiles">{socialLinks.map(({ label, href, icon: Icon, testId }) => <a key={testId} href={href} target="_blank" rel="noreferrer" aria-label={label} title={label} className="footer-social-link focus-ring" data-testid={testId}><Icon aria-hidden="true" /></a>)}</div></div>
       </div>
       <FooterMap />
       <div className="flex flex-col gap-3 pt-6 text-[11px] text-white/45 sm:flex-row sm:items-center sm:justify-between"><span>© {new Date().getFullYear()} NexHSE Africa. Content subject to confirmation.</span><span>Privacy · Terms · Accessibility</span></div>
