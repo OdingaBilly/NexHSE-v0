@@ -1,0 +1,40 @@
+export const services = [
+  ['OSH Training', 'Training & Capacity Building', 'Builds core hazard awareness and legal compliance org-wide.'],
+  ['Fire Safety Training', 'Training & Capacity Building', 'Prevention, response and evacuation skills, including fire marshals.'],
+  ['First Aid Training', 'Training & Capacity Building', 'Certified first aider and refresher training aligned to the 2024 Regulations.'],
+  ['Work at Height & Confined Space Training', 'Training & Capacity Building', 'Specialised competence for high-risk access, fall protection and entry.'],
+  ['Emergency Response Training', 'Training & Capacity Building', 'Builds organisational readiness to respond to workplace emergencies.'],
+  ['Training on Alcohol & Drug Abuse', 'Training & Capacity Building', 'Awareness training and workplace policy support for substance-related risk.'],
+  ['PPE Training', 'Training & Capacity Building', 'Correct selection, fitting and use of personal protective equipment.'],
+  ['Risk Assessments', 'Assessments, Audits & Policy', 'Identifies and controls workplace hazards before they cause harm.'],
+  ['Health & Safety Audits', 'Assessments, Audits & Policy', 'Independent verification against statutory and ISO 45001 standards.'],
+  ['Fire Safety Inspections & Audits', 'Assessments, Audits & Policy', 'Verifies fire controls against the Fire Risk Reduction Rules, 2007.'],
+  ['Development of OSH Policies', 'Assessments, Audits & Policy', 'Tailored policy frameworks built for your operation.'],
+  ['Asbestos Containing Materials Surveys', 'Assessments, Audits & Policy', 'Identification and risk management of legacy asbestos hazards.'],
+  ['Chemical & Mechanical Safety', 'Specialised Services', 'Safe handling, storage and operation around hazards and machinery.'],
+  ['Disaster Preparedness & Management', 'Specialised Services', 'Structured planning and readiness for large-scale or catastrophic events.'],
+  ['Construction Site Safety Management & Monitoring', 'Specialised Services', 'On-site HSE oversight and supervision through the project lifecycle.'],
+  ['Firefighting Equipment Supply & Maintenance', 'Equipment Supply', 'Reliable, inspected firefighting equipment supply and upkeep.'],
+  ['PPE Supply', 'Equipment Supply', 'Quality PPE supplied alongside the training to use it correctly.'],
+  ['First Aid Appliances Supply', 'Equipment Supply', 'Fully stocked, compliant first aid kits and station equipment.'],
+  ['Environmental Impact Assessment & Audits', 'Environmental Management', 'Assesses and verifies environmental compliance and impact management.'],
+  ['Environmental Education (Training)', 'Environmental Management', 'Builds environmental awareness and responsibility across your workforce.'],
+  ['Environmental Policies & Management Plans', 'Environmental Management', 'Structured frameworks that guide consistent environmental performance.'],
+  ['Environmental Management Systems', 'Environmental Management', 'Systems-based approach to continual environmental improvement.'],
+  ['Waste Management', 'Environmental Management', 'Safe, compliant handling, storage and disposal of waste streams.'],
+  ['Effluent & Emissions Management', 'Environmental Management', 'Discharge control planning and monitoring for liquid and airborne emissions.'],
+] as const;
+
+export const faqs = [
+  ['How does NexHSE begin an engagement?', 'We start by understanding your organisation, operating context and the practical concern you need to solve.'],
+  ['Can training be delivered at our workplace?', 'Delivery format is shaped around the programme and your organisation.'],
+  ['Do you provide quotations?', 'Yes. Request a quote with a few details about your organisation and requirement.'],
+  ['What areas of HSE does NexHSE support?', 'NexHSE supports workplace safety, fire safety, training, audits, risk assessment, equipment supply and environmental management.'],
+] as const;
+
+export const articles = [
+  ['Why risk assessments matter before incidents happen', 'Risk management', 'A practical way to make workplace exposure visible and choose controls before an incident forces the conversation.'],
+  ['Building fire-ready workplaces', 'Fire safety', 'Preparedness is prevention, practiced response, clear roles and a building people can evacuate.'],
+  ['Training that changes workplace behaviour', 'HSE training', 'The value of training is measured after the classroom, when people apply knowledge to everyday work.'],
+  ['Environmental management as operational discipline', 'Environment', 'Environmental performance improves when responsibilities, controls and monitoring are built into planned work.'],
+] as const;
