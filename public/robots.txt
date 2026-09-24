@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://nexhse.co.ke/sitemap.xml
+Disallow: /admin
+Sitemap: https://nexhseafrica.co.ke/sitemap.xml

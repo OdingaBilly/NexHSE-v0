@@ -4,13 +4,13 @@
 
 ## Primary resources
 
-- [Services](https://nexhse.co.ke/services): Full 24-service workplace safety, training, equipment and environmental portfolio.
-- [HSE FAQs](https://nexhse.co.ke/faqs): Common questions about workplace safety, fire safety, training, audits and environmental management.
-- [Knowledge hub](https://nexhse.co.ke/knowledge): HSE knowledge notes and practical guidance.
-- [Blog](https://nexhse.co.ke/blog): Workplace safety, fire, risk, training and environmental insights.
-- [Training](https://nexhse.co.ke/training): Workplace HSE training and professional development programmes.
-- [Contact](https://nexhse.co.ke/contact): Head office, Nairobi, Kenya and enquiry details.
-- [Sitemap](https://nexhse.co.ke/sitemap.xml): Complete indexable URL map.
+- [Services](https://nexhseafrica.co.ke/services): Full 24-service workplace safety, training, equipment and environmental portfolio.
+- [HSE FAQs](https://nexhseafrica.co.ke/faqs): Common questions about workplace safety, fire safety, training, audits and environmental management.
+- [Knowledge hub](https://nexhseafrica.co.ke/knowledge): HSE knowledge notes and practical guidance.
+- [Blog](https://nexhseafrica.co.ke/blog): Workplace safety, fire, risk, training and environmental insights.
+- [Training](https://nexhseafrica.co.ke/training): Workplace HSE training and professional development programmes.
+- [Contact](https://nexhseafrica.co.ke/contact): Head office, Nairobi, Kenya and enquiry details.
+- [Sitemap](https://nexhseafrica.co.ke/sitemap.xml): Complete indexable URL map.
 
 ## Topics
 
@@ -18,4 +18,4 @@ Workplace health and safety, OSH training, fire safety, first aid, work at heigh
 
 ## AI access
 
-For structured read-only discovery, use the NexHSE MCP endpoint at `https://nexhse.co.ke/api/mcp` when your AI client supports MCP Streamable HTTP. Available tools cover the service portfolio, HSE FAQs, and knowledge/blog articles.
+For structured read-only discovery, use the NexHSE MCP endpoint at `https://nexhseafrica.co.ke/api/mcp` when your AI client supports MCP Streamable HTTP. Available tools cover the service portfolio, HSE FAQs, and knowledge/blog articles.

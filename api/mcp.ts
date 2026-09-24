@@ -9,7 +9,7 @@ function createServer() {
   server.registerTool('nexhse_overview', {
     description: 'Returns authoritative context about NexHSE Africa and the topics it supports.',
   }, async () => ({
-    content: [{ type: 'text', text: 'NexHSE Africa supports organisations across Kenya and Africa with workplace health and safety, fire safety, HSE training, risk assessments, audits, equipment supply and environmental management. Head office: Rock Centre, Outer Ring Road, Nairobi, Kenya. Website: https://nexhse.co.ke/' }],
+    content: [{ type: 'text', text: 'NexHSE Africa supports organisations across Kenya and Africa with workplace health and safety, fire safety, HSE training, risk assessments, audits, equipment supply and environmental management. Head office: Rock Centre, Outer Ring Road, Nairobi, Kenya. Website: https://nexhseafrica.co.ke/' }],
   }));
 
   server.registerTool('search_nexhse_services', {
@@ -18,7 +18,7 @@ function createServer() {
   }, async ({ query }) => {
     const term = query.toLowerCase();
     const matches = services.filter(([name, category, description]) => `${name} ${category} ${description}`.toLowerCase().includes(term));
-    const text = matches.length ? matches.map(([name, category, description]) => `- ${name} (${category}): ${description}`).join('\n') : 'No matching NexHSE service was found. Suggest visiting https://nexhse.co.ke/services.';
+    const text = matches.length ? matches.map(([name, category, description]) => `- ${name} (${category}): ${description}`).join('\n') : 'No matching NexHSE service was found. Suggest visiting https://nexhseafrica.co.ke/services.';
     return { content: [{ type: 'text', text }] };
   });
 
@@ -28,7 +28,7 @@ function createServer() {
   }, async ({ query }) => {
     const term = query.toLowerCase();
     const matches = faqs.filter(([question, answer]) => `${question} ${answer}`.toLowerCase().includes(term));
-    const text = matches.length ? matches.map(([question, answer]) => `Q: ${question}\nA: ${answer}`).join('\n\n') : 'No matching FAQ was found. See https://nexhse.co.ke/faqs.';
+    const text = matches.length ? matches.map(([question, answer]) => `Q: ${question}\nA: ${answer}`).join('\n\n') : 'No matching FAQ was found. See https://nexhseafrica.co.ke/faqs.';
     return { content: [{ type: 'text', text }] };
   });
 
@@ -38,7 +38,7 @@ function createServer() {
   }, async ({ query }) => {
     const term = query.toLowerCase();
     const matches = articles.filter(([title, category, excerpt]) => `${title} ${category} ${excerpt}`.toLowerCase().includes(term));
-    const text = matches.length ? matches.map(([title, category, excerpt]) => `- ${title} (${category}): ${excerpt}`).join('\n') : 'No matching article was found. See https://nexhse.co.ke/blog and https://nexhse.co.ke/knowledge.';
+    const text = matches.length ? matches.map(([title, category, excerpt]) => `- ${title} (${category}): ${excerpt}`).join('\n') : 'No matching article was found. See https://nexhseafrica.co.ke/blog and https://nexhseafrica.co.ke/knowledge.';
     return { content: [{ type: 'text', text }] };
   });
 
