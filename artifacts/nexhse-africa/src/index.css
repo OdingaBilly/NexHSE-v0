@@ -139,6 +139,7 @@
   .page-hero-slideshow-dots { position: absolute; right: 1rem; bottom: .75rem; z-index: 3; display: flex; gap: .35rem; }
   .page-hero-slideshow-dots span { display: block; height: .3rem; width: .3rem; border-radius: 999px; background: white; opacity: .5; transition: width .4s ease, opacity .4s ease; }
   .page-hero-slideshow-dots span.is-active { width: 1.1rem; opacity: .95; }
+  .page-hero-slideshow.shop-hero-slideshow { position: relative; inset: auto; height: 23.4rem; width: 156%; justify-self: end; }
   .organic-backdrop { position: absolute; inset: 0; overflow: hidden; pointer-events: none; isolation: isolate; }
   .organic-backdrop span { position: absolute; display: block; border-radius: 58% 42% 49% 51% / 41% 55% 45% 59%; filter: saturate(.86); }
   .organic-backdrop span::after { content: ''; position: absolute; inset: 7% -4% -6% 4%; border: 1px solid hsl(var(--accent) / .2); border-radius: 51% 49% 43% 57% / 56% 42% 58% 44%; background: transparent; animation: organic-outline-drift 18s ease-in-out infinite alternate; }
@@ -267,6 +268,7 @@
     .page-canvas-art span:nth-child(2) { right: -18rem; }
     .page-canvas-art span:nth-child(3) { left: 8%; width: 24rem; }
     .page-hero-slideshow { height: 10.5rem; margin-top: .5rem; }
+    .page-hero-slideshow.shop-hero-slideshow { height: 18.9rem; width: 200%; justify-self: end; }
     .hero-linework { height: 2.5rem; }
     .hero-linework span:nth-child(1) { left: -8rem; }
     .hero-linework span:nth-child(2) { left: 25%; }
