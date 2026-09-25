@@ -5,5 +5,8 @@
   "env": {
     "PORT": "5000",
     "BASE_PATH": "/"
-  }
+  },
+  "rewrites": [
+    { "source": "/((?!assets/|api/|robots.txt|sitemap.xml|llms.txt).*)", "destination": "/index.html" }
+  ]
 }

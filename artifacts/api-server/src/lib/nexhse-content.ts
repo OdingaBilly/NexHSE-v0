@@ -38,3 +38,13 @@ export const articles = [
   ['Training that changes workplace behaviour', 'HSE training', 'The value of training is measured after the classroom, when people apply knowledge to everyday work.'],
   ['Environmental management as operational discipline', 'Environment', 'Environmental performance improves when responsibilities, controls and monitoring are built into planned work.'],
 ] as const;
+
+export const products = [
+  ['Industrial Safety Helmet', 'PPE', 'Certified head protection with comfortable fit for on-site teams and contractors.', 'https://nexhseafrica.co.ke/shop/industrial-safety-helmet'],
+  ['Safety Boots', 'PPE', 'Heavy-duty, slip-resistant footwear built for long shifts on active job sites.', 'https://nexhseafrica.co.ke/shop/safety-boots'],
+  ['Protective Work Gloves', 'PPE', 'Grip-focused hand protection for handling, maintenance and general site work.', 'https://nexhseafrica.co.ke/shop/protective-work-gloves'],
+  ['9kg Fire Extinguisher', 'Fire Equipment', 'A dependable multipurpose extinguisher for facilities and mobile teams.', 'https://nexhseafrica.co.ke/shop/9kg-fire-extinguisher'],
+  ['Fire Blanket', 'Fire Equipment', 'Fast protection for kitchen, workshop and emergency response scenarios.', 'https://nexhseafrica.co.ke/shop/fire-blanket'],
+  ['PPE Starter Kit', 'PPE', 'A practical combination of essential personal protective equipment for new teams.', 'https://nexhseafrica.co.ke/shop/ppe-starter-kit'],
+  ['Fire Safety Drill Kit', 'Fire Equipment', 'Practical equipment support for fire drills and response training.', 'https://nexhseafrica.co.ke/shop/fire-safety-drill-kit'],
+] as const;
