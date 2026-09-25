@@ -1,7 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { z } from 'zod';
-import { articles, faqs, services } from '../artifacts/api-server/src/lib/nexhse-content';
+import { articles, faqs, products, services } from '../artifacts/api-server/src/lib/nexhse-content';
 
 function createServer() {
   const server = new McpServer({ name: 'nexhse-africa', version: '1.0.0' });
@@ -39,6 +39,16 @@ function createServer() {
     const term = query.toLowerCase();
     const matches = articles.filter(([title, category, excerpt]) => `${title} ${category} ${excerpt}`.toLowerCase().includes(term));
     const text = matches.length ? matches.map(([title, category, excerpt]) => `- ${title} (${category}): ${excerpt}`).join('\n') : 'No matching article was found. See https://nexhseafrica.co.ke/blog and https://nexhseafrica.co.ke/knowledge.';
+    return { content: [{ type: 'text', text }] };
+  });
+
+  server.registerTool('search_nexhse_products', {
+    description: 'Searches the NexHSE Africa PPE and fire equipment catalogue by product, category or use.',
+    inputSchema: { query: z.string().min(1).describe('A PPE, fire equipment or workplace procurement need') },
+  }, async ({ query }) => {
+    const term = query.toLowerCase();
+    const matches = products.filter(([name, category, description]) => `${name} ${category} ${description}`.toLowerCase().includes(term));
+    const text = matches.length ? matches.map(([name, category, description, url]) => `- ${name} (${category}): ${description} ${url}`).join('\n') : 'No matching product was found. See https://nexhseafrica.co.ke/shop.';
     return { content: [{ type: 'text', text }] };
   });
 

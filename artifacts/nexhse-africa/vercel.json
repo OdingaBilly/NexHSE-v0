@@ -1,5 +1,8 @@
 {
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
-  "framework": "vite"
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/((?!assets/|api/|robots.txt|sitemap.xml|llms.txt).*)", "destination": "/index.html" }
+  ]
 }

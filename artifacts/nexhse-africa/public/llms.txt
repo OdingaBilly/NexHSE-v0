@@ -11,6 +11,7 @@
 - [Training](https://nexhseafrica.co.ke/training): Workplace HSE training and professional development programmes.
 - [Contact](https://nexhseafrica.co.ke/contact): Head office, Nairobi, Kenya and enquiry details.
 - [Sitemap](https://nexhseafrica.co.ke/sitemap.xml): Complete indexable URL map.
+- [Shop](https://nexhseafrica.co.ke/shop): PPE and fire equipment catalogue for workplace procurement.
 
 ## Topics
 
@@ -18,4 +19,4 @@ Workplace health and safety, OSH training, fire safety, first aid, work at heigh
 
 ## AI access
 
-For structured read-only discovery, use the NexHSE MCP endpoint at `https://nexhseafrica.co.ke/api/mcp` when your AI client supports MCP Streamable HTTP. Available tools cover the service portfolio, HSE FAQs, and knowledge/blog articles.
+For structured read-only discovery, use the NexHSE MCP endpoint at `https://nexhseafrica.co.ke/api/mcp` when your AI client supports MCP Streamable HTTP. Available tools cover the service portfolio, PPE and fire equipment products, HSE FAQs, and knowledge/blog articles.
